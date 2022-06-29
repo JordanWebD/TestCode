@@ -1,1 +1,82 @@
-This is a test only and was edited in the test branch
+This is a test only and was edited in the test branch.
+
+const express = require("express");
+const app = express();
+const port = 3000;
+const https = require("https");
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(express.static(__dirname));
+app.use(express.static(__dirname + "/images"));
+
+app.get("/", function(req,res){
+res.sendFile(__dirname + "/index.html");
+});
+
+//this is use to load and get the API via URL
+app.post("/", function(req,res) {
+const parameter1 = req.body.name1;
+const parameter2 = req.body.name2;
+
+const urlCode = "https://www.sample.com/main?parameter1=" + parameter 1 + "&parameter2=" + parameter2;
+
+
+https.get(urlCode, function(response) {
+console.log(response.statusCode);
+response.on("data", function(data) {
+const apiTree = JSON.parse(data);
+const parameter1Value = apiTree.main[0].parameter1;
+const parameter2Value = apiTree.main[1].parameter2;
+
+res.write("<h1>The value of parameter 1 is " + parameter1Value + ".</h1>");
+res.write("<h1>The value of parameter 2 is " + parameter2Value + ".</h1>");
+
+
+});
+});
+});
+
+
+//Or use below to use the external server to communicate with our gathered data
+1. Initialize the npm in git by installing it
+2. Add const in initialization
+3. Copy and paste the code here
+Note: Should understand the get started steps and understand how the code works
+
+app.post("/", function(req,res){
+const firstName = req.body.firstName;
+const lastName = req.body.lastName;
+const emailAddress = req.body.emailAddress;
+
+
+//paste here the code
+listId = "1234567";
+const subscriberDetails = {
+firstName = firstName,
+latName = lastName,
+email = emailAddress
+};
+
+
+	async function run() {
+	const response = await mailchimp.lists.addListMember(listId, {
+	email_address: subscriberDetails.email;
+	status: "subscribed",
+	merge_fields: {
+		FNAME: subscriberDetails.firstName;
+		LNAME:: subscriberDetails.lastName;
+		}
+		});
+
+
+});
+
+
+
+
+
+//port listener
+app.listen(process.env.PORT || port, function() {
+console.log("The server is running in port " + port);
+});
